@@ -3,8 +3,8 @@
   "short_name": "HIMACHAL360",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#438AFF",
-  "theme_color": "#438AFF",
+  "background_color": "#fff",
+  "theme_color": "#fff",
   "icons": [
     {
       "src": "icon-192x192.png",
