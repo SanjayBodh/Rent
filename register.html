@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Auth</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="manifest" href="manifest.json">
+</head>
+<style>
+ .alert.fade-out {
+      opacity: 0;
+      transition: opacity 0.5s ease-out;
+      animation: slideUp 0.5s ease-out forwards;
+    }
+    @keyframes slideUp {
+      0% {
+        transform: translateY(0);
+      }
+      100% {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+    }
+</style>
+<body>
+<div id="alertContainer" class="position-fixed top-40 start-0   p-3" style="z-index: 11"></div>
+<form id="MainForm" class="w-20 m-4">
+  <h2 class="mb-3">Register User</h2> 
+  <div class="form-floating mb-3">
+    <input type="email" class="form-control" id="email" placeholder="name@example.com">
+    <label for="floatingInput">Email address</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="password" class="form-control" id="Password" placeholder="Password">
+    <label for="floatingPassword">Password</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="first" placeholder="First Name">
+    <label for="floatingInput">First Name</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="last" placeholder="Last Name">
+    <label for="floatingPassword">Last Name</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="tel" class="form-control" id="phone" placeholder="Phone Number">
+    <label for="floatingPassword">Phone Number</label>
+  </div>
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="amount" placeholder="amount">
+    <label for="floatingPassword">amount</label>
+  </div>
+  <input type="submit" id="submitbutton" class="btn btn-primary" style="float: right" value="Register" onclick="hide()" disabled >
+  <a href="signin.html"><button type="button" class="btn btn-primary me-2" style="float: right" id="Hide" >Sign In</button></a>
+ <a href="front.html"><button type="button" class="btn btn-primary me-2" style="float: right" >main page</button></a>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+ const firebaseConfig = {
+    apiKey: "AIzaSyBRZrQ35ZCsWtJ_Dvcq0w0iOED2ypXv89w",
+    authDomain: "databse-b7f4b.firebaseapp.com",
+    databaseURL: "https://databse-b7f4b-default-rtdb.firebaseio.com",
+    projectId: "databse-b7f4b",
+    storageBucket: "databse-b7f4b.appspot.com",
+    messagingSenderId: "440573409846",
+    appId: "1:440573409846:web:4a49d38fc1d5e5bb803697",
+    measurementId: "G-JE7M0T3QSJ"
+  };
+   
+   
+  const app = initializeApp(firebaseConfig);
+  const DB = getDatabase();
+  const auth = getAuth(app);
+
+  let email = document.getElementById('email');
+  let password = document.getElementById('Password');
+  let first = document.getElementById('first');
+  let last = document.getElementById('last');
+  let phone = document.getElementById('phone');
+  let amount = document.getElementById('amount');
+  let MainForm = document.getElementById('MainForm');
+
+  let RegisterUser = evt => {
+    evt.preventDefault(); // Prevent default form submission behavior
+
+    let amountValue = parseFloat(amount.value);
+
+    createUserWithEmailAndPassword(auth, email.value, password.value)
+      .then((credentials) => {
+        // Once registered, store additional user data in the database
+        set(ref(DB, 'UsersAuthList/' + credentials.user.uid), {
+          email: email.value,
+          password: password.value,
+          firstname: first.value,
+          lastname: last.value,
+          phoneNumber: phone.value,
+          amount: amountValue 
+        }).then(() => {
+          alert("Registration successful!");
+          window.location.href = 'signin.html'; // Redirect after successful registration
+        }).catch((error) => {
+          alert("Failed to store user data: " + error.message);
+          console.error("Database write error:", error);
+        });
+      })
+       .catch((error) => {
+      let errorMessage = error.message;
+      switch (error.code) {
+       case 'auth/invalid-email':
+          errorMessage = 'The email address is not valid.';
+          break;
+        case 'auth/user-not-found':
+          errorMessage = 'No user found with this email address.';
+          break;
+        case 'auth/wrong-password':
+          errorMessage = 'The password is incorrect.';
+          break;
+        case 'auth/network-request-failed':
+          errorMessage = 'Network request failed. Please check your internet connection.';
+          break;
+        case 'auth/invalid-credential':
+          errorMessage = 'Invalid credentials. Please double-check your email and password.';
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = 'The email address is already in use by another account.';
+          break;
+        case 'auth/operation-not-allowed':
+          errorMessage = 'The operation is not allowed.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'The password is too weak use atleast 6 letters.';
+          break;
+        case 'auth/too-many-requests':
+          errorMessage = 'Too many requests. Please try again later.';
+          break;
+          default:
+          errorMessage = 'Registration failed: ' + errorMessage;
+          break;
+         case 'auth/invalid-credential':
+  errorMessage = 'Invalid credentials. Please double-check your email and password.';
+  break;
+
+      }
+
+      showAlert(errorMessage, 'danger');
+          console.error("Sign-in error:", error);
+        });
+  };
+
+  MainForm.addEventListener('submit', RegisterUser);
+
+function showAlert(message, alertType) {
+      const alertContainer = document.getElementById('alertContainer');
+      const alert = document.createElement('div');
+      alert.className = `alert alert-${alertType} alert-dismissible fade show`;
+      alert.setAttribute('role', 'alert');
+      alert.innerHTML = `
+        ${message}
+        
+      `;
+
+      // Customizing danger button color
+      if (alertType === 'danger') {
+        alert.classList.add('custom-danger-alert');
+      }
+
+           alertContainer.appendChild(alert);
+
+      // Automatically close the alert after 5 seconds
+      setTimeout(function() {
+        alert.classList.add('fade-out');
+        setTimeout(function() {
+          alert.remove();
+        }, 1000); 
+      }, 2000);
+    }
+</script>
+<script>
+  function hide() {
+    history.pushState(null, null, 'signin.html');   
+  }
+
+  document.getElementById('hide').addEventListener('click', hide);
+</script>
+
+<script>
+ 
+  function HideAndPreventBack() {
+ 
+    history.pushState(null, null, 'signin.html'); to
+    window.location.href = 'signin.html'; 
+  }
+
+  document.getElementById('Hide').addEventListener('click', HideAndPreventBack);
+</script>
+ <script>
+    // Get the form and input elements
+    const form = document.getElementById('MainForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('Password');
+    const firstInput = document.getElementById('first');
+    const lastInput = document.getElementById('last');
+    const phoneInput = document.getElementById('phone');
+    const amountInput = document.getElementById('amount');
+    const submitButton = document.getElementById('submitbutton');
+
+  
+    function checkInputs() {
+      const emailValue = emailInput.value.trim();
+      const passwordValue = passwordInput.value.trim();
+      const firstValue = firstInput.value.trim();
+      const lastValue = lastInput.value.trim();
+      const amountValue = amountInput.value.trim();
+      const phoneValue = phoneInput.value.trim();
+
+      if (emailValue !== '' && passwordValue !== '' && firstValue !== '' && lastValue !== ''&& phoneValue !== '' && amountValue !== '') {
+        submitButton.disabled = false; 
+      } else {
+        submitButton.disabled = true; 
+      }
+    }
+
+    emailInput.addEventListener('input', checkInputs);
+    passwordInput.addEventListener('input', checkInputs);
+    firstInput.addEventListener('input', checkInputs);
+    lastInput.addEventListener('input', checkInputs);
+    phoneInput.addEventListener('input', checkInputs);
+    amountInput.addEventListener('input', checkInputs);
+
+ 
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+    });
+  </script>
+</body>
+</html>
