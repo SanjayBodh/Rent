@@ -1641,7 +1641,7 @@ account_circle
 </div>
 </form>
  <h2 id="msg"></h2>
-  <h2 id="greet"></h2>
+  <h2 id="name"></h2>
 </div>
 </div>
 </div>
@@ -1995,6 +1995,7 @@ expand_more
 
     let msg = document.getElementById('msg');
     let greet = document.getElementById('greet');
+    let name = document.getElementById('name');
     let signout = document.getElementById('signout');
     let Delete = document.getElementById('cornfirmdelete');
     let Deleteuser = document.getElementById('deleteuser');
@@ -2004,7 +2005,7 @@ expand_more
       signOut(auth).then(()=>{
         sessionStorage.removeItem("user-creds");
       sessionStorage.removeItem("user-info");
-      window.location.href = 'front.html';
+      window.location.href = 'index.html';
        
       })
      
@@ -2013,12 +2014,12 @@ expand_more
 
           let CheckCred = () => {
       if (!sessionStorage.getItem("user-creds")) {
-        window.location.href = "front.html";
+        window.location.href = "index.html";
         }
         else {
         msg.innerText = `User with email ${UserCreds.email} logged in`;
-        greet.innerText = `Welcome ${UserInfo.firstname + " " + UserInfo.lastname}!`;
-      }
+        greet.innerText = `${UserInfo.firstname + " " + UserInfo.lastname}!`;
+        name.innerText = `Welcome ${UserInfo.firstname + " " + UserInfo.lastname}!`;        }
     }
 
 
@@ -2053,7 +2054,7 @@ passwordimp.value
           deleteUser(user).then(() => {
                 sessionStorage.removeItem("user-creds");
                sessionStorage.removeItem("user-info");
-              window.location.href = 'front.html';
+              window.location.href = 'index.html';
          }).catch((error) => {
         alert(error.message);
         console.log(error.code);
