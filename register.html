@@ -14,13 +14,20 @@
     <title>Login</title>
 </head>
 <style>
-
 #email-icon{
 font-size:25px;
 position:relative;
 top:6px;
 color:white;
 right:5px;
+}
+  input[type="submit"]:disabled {
+            background-color: #dddddd; /* Grey */
+            color: #aaaaaa;
+            cursor: not-allowed;
+        }
+input{
+COLOR:black;
 }
 .body::-webkit-scrollbar {
   display: none;
@@ -57,7 +64,7 @@ input,textarea,button,select,a{
 a:focus,a:visited,a:active{
 outline:none;
 }
-.body {
+.bod {
     user-select: none;
     -webkit-user-select: none; /* Safari */
     -ms-user-select: none; /* Internet Explorer/Edge */
@@ -70,7 +77,7 @@ body{
     margin:0;
     align-items:center;
     text-align:center;
-    background:#008DDA;5755FE;
+    background:#008DDA;
 font-family:rocknroll one;
  scrollbar-width: none; 
     -ms-overflow-style: none;
@@ -80,14 +87,14 @@ overflow:hidden;
     text-align:center;
     align-items:center;
 position:fixed;
-top:55%;
+top:40%;
 left:50%;
 transform:translate(-50%,-50%);
 width:40%;
 height:70%;
 border-radius:10px;
 }
-input[type="email"],input[type="password"],input[type="text"]{
+input[type="email"],input[type="password"],input[type="text"],input[type="tel"]{
     width:92%;
     height:40px;
     border:none;
@@ -99,19 +106,19 @@ color:black;
 padding:0px 20px;
 }
 input[type="submit"]{
-    font-size:15px;
+   font-size:15px;
     background:#333A73;
     border-radius:10px;
     border:2px solid white;
     color:white;
     padding:5px 45px;
     pointer:cursor;
-transition:all 0.5s;
+transition:all 0.5s
 }
-input[type="submit"]:hover{
+input[type="submit"]hover{
 background:white;
-border:2px solid #333A73;
-color:#333A73;
+border:2px solid blue;
+color:blue;
 transition:all 0.5s;
 }
 .user{
@@ -148,14 +155,24 @@ h1,h2,p{
 input[type="email"]:focus{
  background:white;
 border:2px solid white;
-box-shadow:0px 9px 10px rgba(0,0,0,0.4);
+box-shadow:0px 9px 10px rgba(0,0,0,0.4)
 
 }
 input[type="password"]:focus{
  background:white;
 border:2px solid white;
-box-shadow:0px 9px 10px rgba(0,0,0,0.4);
-color:black;
+box-shadow:0px 9px 10px rgba(0,0,0,0.4)
+}
+input[type="text"]:focus{
+ background:white;
+border:2px solid white;
+box-shadow:0px 9px 10px rgba(0,0,0,0.4)
+
+}
+input[type="tel"]:focus{
+ background:white;
+border:2px solid white;
+box-shadow:0px 9px 10px rgba(0,0,0,0.4)
 }
 .left-arrow{
 position:fixed;
@@ -189,6 +206,10 @@ font-size:18px;
         opacity: 0;
       }
     }
+#passwordAlert{
+position:fixed;
+top:5%;
+}
 input {
   caret-color: black;
 }
@@ -197,11 +218,11 @@ input {
     width:100%;
     height:70%;
 }
-input[type="email"],input[type="password"],input[type="text"]{
+input[type="email"],input[type="password"],input[type="text"],input[type="tel"]{
     width:80%;
     height:40px;
     border:none;
-    border-radius:10px;
+    border-radius:20px;
     background:white;
     font-size:15px;
     outline:none;
@@ -217,34 +238,39 @@ color:black;
 arrow_back_ios_new
 </span> Home</a>
    <div class="login">
-   <h1>Login</h1>
+   <h1>Sign up</h1>
    <h2>Hello, Welcome</h2>
    <div class="user">
    <div class="user-icon"><img src="images/username.gif" alt="..."></div>
    </div><br>
    <span id="email-icon" class="material-symbols-outlined">
-person
-</span><input type="email" id="email" placeholder="Email@gmail.com" ><br><br>
+mail
+</span><input type="email" id="email" placeholder="Email@gmail.com" pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Please enter a valid email address" required><br><br>
    <span id="email-icon" class="material-symbols-outlined">
 lock_open
-</span><input type="password" id="Password" placeholder="Password" > <br><br>
- <input type="checkbox" onclick="myFunction()"> Show Password<br>
-<br>
-   <input type="submit" id="HideButton" value="Log in"><br><br>
-   <p>Don't have an acount? <a href="register.html" id="hideButton">Sign up</a><br><br>
-   <br>
-   <a href="reset.html" id="forget">Forget Password <span id="forget-icon" class="material-symbols-outlined">
-sync_lock
-</span></a>
+</span><input type="password" id="Password" placeholder="Confirm Password" required><br><br>
+   <span id="email-icon" class="material-symbols-outlined">
+person
+</span><input type="text" id="first" placeholder="User-name" required><br><br>
+   <span id="email-icon" class="material-symbols-outlined">
+person_add
+</span><input type="text" id="last" placeholder="Last-name" required><br><br>
+     <span id="email-icon" class="material-symbols-outlined">
+phone
+</span><input type="tel" id="phone" placeholder="+(91)1234567890" autocomplete="off"  required><br><br>
+     <input type="checkbox" onclick="togglePasswordVisibility()"> Show Password<br><br>
+   <input type="submit" id="submitbutton" value="Register"  onclick="hide()" disabled><br><br>
+   <p>Already have an acount <a href="signin.html" id="Hide">Log in</a><br><br>
    </div>
 </form>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-  import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
-  import { getAuth, signInWithEmailAndPassword,sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+  import { getDatabase, set, ref } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-database.js";
+  import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
-  const firebaseConfig = {
+ const firebaseConfig = {
     apiKey: "AIzaSyBRZrQ35ZCsWtJ_Dvcq0w0iOED2ypXv89w",
     authDomain: "databse-b7f4b.firebaseapp.com",
     databaseURL: "https://databse-b7f4b-default-rtdb.firebaseio.com",
@@ -255,39 +281,40 @@ sync_lock
     measurementId: "G-JE7M0T3QSJ"
   };
    
+   
   const app = initializeApp(firebaseConfig);
-  const db = getDatabase();
+  const DB = getDatabase();
   const auth = getAuth(app);
-  const dbref = ref(db);
 
   let email = document.getElementById('email');
   let password = document.getElementById('Password');
+  let first = document.getElementById('first');
+  let last = document.getElementById('last');
+  let phone = document.getElementById('phone');
   let MainForm = document.getElementById('MainForm');
-  let Forgetpassowrd = document.getElementById('forgetpassword');
 
-  let signInUser = evt => {
-    evt.preventDefault();
+  let RegisterUser = evt => {
+    evt.preventDefault(); // Prevent default form submission behavior
 
-    signInWithEmailAndPassword(auth, email.value, password.value)
+    createUserWithEmailAndPassword(auth, email.value, password.value)
       .then((credentials) => {
-        get(child(dbref, 'UsersAuthList/' + credentials.user.uid)).then((snapshot) => {
-          if (snapshot.exists()) {
-            sessionStorage.setItem("user-info", JSON.stringify({
-              firstname: snapshot.val().firstname,
-              lastname: snapshot.val().lastname,
-              number: snapshot.val().number
-            }));
-            sessionStorage.setItem("user-creds", JSON.stringify(credentials.user));
-            window.location.href = 'account.html';
-          } else {
-            alert("User data not found.");
-          }
+        // Once registered, store additional user data in the database
+        set(ref(DB, 'UsersAuthList/' + credentials.user.uid), {
+          email: email.value,
+          password: password.value,
+          firstname: first.value,
+          lastname: last.value,
+          phoneNumber: phone.value
+        }).then(() => {
+          alert("Registration successful!");
+          window.location.href = 'signin.html'; // Redirect after successful registration
+        }).catch((error) => {
+          alert("Failed to store user data: " + error.message);
+          console.error("Database write error:", error);
         });
       })
-      .catch((error) => {
+       .catch((error) => {
       let errorMessage = error.message;
-
-      // Customize error messages based on error codes
       switch (error.code) {
        case 'auth/invalid-email':
           errorMessage = 'The email address is not valid.';
@@ -301,29 +328,36 @@ sync_lock
         case 'auth/network-request-failed':
           errorMessage = 'Network request failed. Please check your internet connection.';
           break;
+        case 'auth/invalid-credential':
+          errorMessage = 'Invalid credentials. Please double-check your email and password.';
+          break;
+        case 'auth/email-already-in-use':
+          errorMessage = 'The email address is already in use by another account.';
+          break;
         case 'auth/operation-not-allowed':
           errorMessage = 'The operation is not allowed.';
+          break;
+        case 'auth/weak-password':
+          errorMessage = 'The password is too weak use atleast 6 letters.';
           break;
         case 'auth/too-many-requests':
           errorMessage = 'Too many requests. Please try again later.';
           break;
-        case 'auth/invalid-credential':
-          errorMessage = 'Invalid credentials. Please double-check your email and password.';
-          break;
           default:
-          errorMessage = 'Registration Failed: ' + errorMessage;
-          break;    
+          errorMessage = 'Registration failed: ' + errorMessage;
+          break;
+         case 'auth/invalid-credential':
+  errorMessage = 'Invalid credentials. Please double-check your email and password.';
+  break;
 
       }
 
       showAlert(errorMessage, 'danger');
-          console.error("Registration Failed:", error);
+          console.error("Sign-in error:", error);
         });
   };
 
-let Forgetpassword
-
-  MainForm.addEventListener('submit', signInUser);
+  MainForm.addEventListener('submit', RegisterUser);
 
 function showAlert(message, alertType) {
       const alertContainer = document.getElementById('alertContainer');
@@ -347,50 +381,79 @@ function showAlert(message, alertType) {
         alert.classList.add('fade-out');
         setTimeout(function() {
           alert.remove();
-        }, 1000); // Delay the removal to match the transition duration
+        }, 1000); 
       }, 2000);
     }
-
 </script>
 <script>
- 
-  function hideAndPreventBack() {
- 
-    history.pushState(null, null, 'register.html');
-    window.location.href = 'register.html'; 
+  function hide() {
+    history.pushState(null, null, 'signin.html');   
   }
 
-  document.getElementById('hideButton').addEventListener('click', hideAndPreventBack);
+  document.getElementById('hide').addEventListener('click', hide);
 </script>
+
 <script>
+ 
   function HideAndPreventBack() {
  
-    history.pushState(null, null, 'account.html'); 
+    history.pushState(null, null, 'signin.html'); to
+    window.location.href = 'signin.html'; 
   }
 
-  document.getElementById('HideButton').addEventListener('click', HideAndPreventBack);
+  document.getElementById('Hide').addEventListener('click', HideAndPreventBack);
 </script>
-<script>
- 
-  function hideAndPreventForget() {
- 
-    history.pushState(null, null, 'reset.html');
-    window.location.href = 'reset.html'; 
-  }
+ <script>
+    // Get the form and input elements
+    const form = document.getElementById('MainForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('Password');
+    const firstInput = document.getElementById('first');
+    const lastInput = document.getElementById('last');
+    const phoneInput = document.getElementById('phone');
+    const submitButton = document.getElementById('submitbutton');
 
-  document.getElementById('forget').addEventListener('click', hideAndPreventForget);
-</script>
+  
+    function checkInputs() {
+      const emailValue = emailInput.value.trim();
+      const passwordValue = passwordInput.value.trim();
+      const firstValue = firstInput.value.trim();
+      const lastValue = lastInput.value.trim();
+      const phoneValue = phoneInput.value.trim();
+
+      if (emailValue !== '' && passwordValue !== '' && firstValue !== '' && lastValue !== ''&& phoneValue !== '') {
+        submitButton.disabled = false; 
+      } else {
+        submitButton.disabled = true; 
+      }
+    }
+
+    emailInput.addEventListener('input', checkInputs);
+    passwordInput.addEventListener('input', checkInputs);
+    firstInput.addEventListener('input', checkInputs);
+    lastInput.addEventListener('input', checkInputs);
+    phoneInput.addEventListener('input', checkInputs);
+
+ 
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+    });
+  </script>
+</body>
+</html>
     <script>
 
-    function myFunction() {
-  var x = document.getElementById("Password");
-  if (x.type === "password") {
-    x.type = "text";
-  } else {
-    x.type = "password";
-  }
-}
-    </script>
+        function togglePasswordVisibility() {
+            var password = document.getElementById("Password");
+            if (password.type === "password") {
+                password.type = "text";
+            } else {
+                password.type = "password";
+            }
+        }
 
+
+    </script>
 </body>
 </html>
