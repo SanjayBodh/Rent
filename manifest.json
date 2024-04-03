@@ -1,0 +1,22 @@
+{
+  "name": "HIMACHAL360",
+  "short_name": "HP360",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#008DDA",
+  "icons": [
+    {
+      "src": "icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "id": "HIMACHAL360",
+  "description": "Himachal Pradesh best FD deposit that provide 10% interest rate per Anum"
+}
