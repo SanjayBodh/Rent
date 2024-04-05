@@ -1,10 +1,10 @@
 {
   "name": "HP360",
-  "short_name": "HIMACHAL360",
+  "short_name": "Himachal360",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#008DDA",
+  "background_color": "#fff",
+  "theme_color": "#fff",
   "icons": [
     {
       "src": "icon-192x192.png",
